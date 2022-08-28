@@ -9,40 +9,36 @@ class Column;
 
 class Node {
   int _row_id;
-  Column* _column;
-  Node* _right;
-  Node* _left;
-  Node* _up;
-  Node* _down;
+  Column *_column;
+  Node *_right;
+  Node *_left;
+  Node *_up;
+  Node *_down;
 
- public:
-  Node(int row_id = -1, Column* column = NULL, Node* right = NULL,
-       Node* left = NULL, Node* up = NULL, Node* down = NULL)
-      : _row_id(row_id),
-        _column(column),
-        _right(right),
-        _left(left),
-        _up(up),
+public:
+  Node(int row_id = -1, Column *column = NULL, Node *right = NULL,
+       Node *left = NULL, Node *up = NULL, Node *down = NULL)
+      : _row_id(row_id), _column(column), _right(right), _left(left), _up(up),
         _down(down) {}
 
   void set_row_id(int id) { _row_id = id; }
   int row_id() { return _row_id; }
-  void set_column(Column* column) { _column = column; }
-  Column* column() const { return _column; }
-  Node* right() const { return _right; }
-  Node* left() const { return _left; }
-  Node* up() const { return _up; }
-  Node* down() const { return _down; }
-  void set_right(Node* right) { _right = right; }
-  void set_left(Node* left) { _left = left; }
-  void set_up(Node* up) { _up = up; }
-  void set_down(Node* down) { _down = down; }
+  void set_column(Column *column) { _column = column; }
+  Column *column() const { return _column; }
+  Node *right() const { return _right; }
+  Node *left() const { return _left; }
+  Node *up() const { return _up; }
+  Node *down() const { return _down; }
+  void set_right(Node *right) { _right = right; }
+  void set_left(Node *left) { _left = left; }
+  void set_up(Node *up) { _up = up; }
+  void set_down(Node *down) { _down = down; }
 };
 
 class Column : public Node {
   int _size;
 
- public:
+public:
   Column(int size = 0) : Node(-1, this), _size(size) {}
 
   int size() const { return _size; }
@@ -51,19 +47,19 @@ class Column : public Node {
 };
 
 class Matrix {
-  Node* _root;
+  Node *_root;
 
- public:
+public:
   Matrix();
-  Matrix(const vector<vector<bool>>& matrix, int m, int n);
-  Node* head() const;
+  Matrix(const vector<vector<bool>> &matrix, int m, int n);
+  Node *head() const;
 
   bool is_empty() const;
   int number_of_rows() const;
-  void remove_row(Node* node);
-  void restore_row(Node* node);
-  void remove_column(Node* node);
-  void restore_column(Node* node);
+  void remove_row(Node *node);
+  void restore_row(Node *node);
+  void remove_column(Node *node);
+  void restore_column(Node *node);
 
   ~Matrix();
 };
@@ -73,20 +69,20 @@ Matrix::Matrix() : _root(new Node()) {
   _root->set_left(_root);
 }
 
-Matrix::Matrix(const vector<vector<bool>>& matrix, int m, int n)
+Matrix::Matrix(const vector<vector<bool>> &matrix, int m, int n)
     : _root(new Node()) {
   if (m == 0 || n == 0) {
     return;
   }
 
   // create first column
-  Node* cur_column = new Column(0);
+  Node *cur_column = new Column(0);
   _root->set_right(cur_column);
   cur_column->set_left(_root);
 
   // create column header objects
   for (int j = 1; j < n; j++) {
-    Node* new_column = new Column(0);
+    Node *new_column = new Column(0);
     cur_column->set_right(new_column);
     new_column->set_left(cur_column);
     cur_column = cur_column->right();
@@ -95,22 +91,22 @@ Matrix::Matrix(const vector<vector<bool>>& matrix, int m, int n)
   _root->set_left(cur_column);
 
   // initialize m x n array of Node pointers
-  vector<vector<Node*>> ptr_matrix(m, vector<Node*>(n, NULL));
+  vector<vector<Node *>> ptr_matrix(m, vector<Node *>(n, NULL));
 
   // create nodes of Matrix, referenced by pointers in ptr_matrix
   // also link the nodes vertically
-  Node* tmp;
+  Node *tmp;
   cur_column = _root->right();
   // j = column of matrix, i = row of matrix
   for (int j = 0; j < n; ++j, cur_column = cur_column->right()) {
     tmp = cur_column;
     for (int i = 0; i < m; ++i) {
       if (matrix[i][j]) {
-        ptr_matrix[i][j] = new Node(i, static_cast<Column*>(cur_column));
+        ptr_matrix[i][j] = new Node(i, static_cast<Column *>(cur_column));
         ptr_matrix[i][j]->set_up(tmp);
         tmp->set_down(ptr_matrix[i][j]);
         tmp = ptr_matrix[i][j];
-        (static_cast<Column*>(cur_column))->add_to_size(1);
+        (static_cast<Column *>(cur_column))->add_to_size(1);
       } else
         ptr_matrix[i][j] = NULL;
     }
@@ -151,16 +147,14 @@ Matrix::Matrix(const vector<vector<bool>>& matrix, int m, int n)
         prev = ptr_matrix[i][j];
       }
     }
-    if (first != NULL) {  // if row i is not a zero row
+    if (first != NULL) { // if row i is not a zero row
       prev->set_right(first);
       first->set_left(prev);
     }
   }
 }
 
-Node* Matrix::head() const {
-  return _root;
-}
+Node *Matrix::head() const { return _root; }
 
 bool Matrix::is_empty() const {
   return _root->right() == _root && _root->left() == _root;
@@ -168,8 +162,8 @@ bool Matrix::is_empty() const {
 
 int Matrix::number_of_rows() const {
   int max_column_size = 0;
-  for (Node* node = _root->right(); node != _root; node = node->right()) {
-    int column_size = static_cast<Column*>(node)->size();
+  for (Node *node = _root->right(); node != _root; node = node->right()) {
+    int column_size = static_cast<Column *>(node)->size();
     if (column_size > max_column_size) {
       max_column_size = column_size;
     }
@@ -177,12 +171,12 @@ int Matrix::number_of_rows() const {
   return max_column_size;
 }
 
-void Matrix::remove_row(Node* node) {
+void Matrix::remove_row(Node *node) {
   if (node == NULL || node == _root || node->column() == node) {
     return;
   }
 
-  Node* cur = node;
+  Node *cur = node;
 
   do {
     // remove cur by dancing with the up/down pointers
@@ -191,35 +185,35 @@ void Matrix::remove_row(Node* node) {
 
     cur->column()->add_to_size(-1);
     cur = cur->right();
-  } while (cur != node);  // stop when we're back where we started
+  } while (cur != node); // stop when we're back where we started
 }
 
-void Matrix::restore_row(Node* node) {
-  Node* cur = node;
+void Matrix::restore_row(Node *node) {
+  Node *cur = node;
 
   do {
-    cur->up()->set_down(cur);  // connect row back
-    cur->down()->set_up(cur);  // into the matrix
+    cur->up()->set_down(cur); // connect row back
+    cur->down()->set_up(cur); // into the matrix
     cur->column()->add_to_size(1);
     cur = cur->left();
   } while (cur != node);
 }
 
-void Matrix::remove_column(Node* node) {
+void Matrix::remove_column(Node *node) {
   if (node == NULL || node == _root) {
     return;
   }
 
-  Node* cur = node;
+  Node *cur = node;
   do {
     cur->left()->set_right(cur->right());
     cur->right()->set_left(cur->left());
     cur = cur->up();
-  } while (cur != node);  // stop when we're back where we started
+  } while (cur != node); // stop when we're back where we started
 }
 
-void Matrix::restore_column(Node* node) {
-  Node* cur = node;
+void Matrix::restore_column(Node *node) {
+  Node *cur = node;
   do {
     cur->right()->set_left(cur);
     cur->left()->set_right(cur);
@@ -248,7 +242,7 @@ Matrix::~Matrix() {
 
 enum class RC { row, column };
 struct RC_Item {
-  Node* node;
+  Node *node;
   RC type;
 };
 
@@ -256,14 +250,15 @@ typedef stack<RC_Item> RC_Stack;
 
 typedef stack<RC_Stack> H_Stack;
 
-bool DLX(Matrix& matrix, vector<int>& solution, vector<int>& global_solution,
-         H_Stack& history);
-Column* choose_column(Matrix& matrix);
-void update(Matrix& matrix, vector<int>& solution, H_Stack& history, Node* row);
-void downdate(Matrix& matrix, vector<int>& solution, H_Stack& history);
+bool DLX(Matrix &matrix, vector<int> &solution, vector<int> &global_solution,
+         H_Stack &history);
+Column *choose_column(Matrix &matrix);
+void update(Matrix &matrix, vector<int> &solution, H_Stack &history, Node *row);
+void downdate(Matrix &matrix, vector<int> &solution, H_Stack &history);
 
-tuple<bool, int, vector<int>> FindLeastPiecesToCoverMap(
-    const vector<vector<bool>>& map_matrix, int rows_count, int cols_count) {
+tuple<bool, int, vector<int>>
+FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
+                          int rows_count, int cols_count) {
   Matrix matrix(map_matrix, rows_count, cols_count);
   H_Stack history;
   vector<int> solution, global_solution;
@@ -272,30 +267,30 @@ tuple<bool, int, vector<int>> FindLeastPiecesToCoverMap(
   return {solution_exists, global_solution.size(), global_solution};
 }
 
-Column* choose_column(Matrix& matrix) {
+Column *choose_column(Matrix &matrix) {
   if (matrix.is_empty())
     return NULL;
 
-  Column* cur_column = static_cast<Column*>(matrix.head()->right());
-  Column* min_size_column = cur_column;
+  Column *cur_column = static_cast<Column *>(matrix.head()->right());
+  Column *min_size_column = cur_column;
 
   while (cur_column != matrix.head()) {
     if (cur_column->size() < min_size_column->size()) {
       min_size_column = cur_column;
     }
-    cur_column = static_cast<Column*>(cur_column->right());
+    cur_column = static_cast<Column *>(cur_column->right());
   }
   return min_size_column;
 }
 
-bool DLX(Matrix& matrix, vector<int>& solution, vector<int>& global_solution,
-         H_Stack& history) {
-  Column* column = choose_column(matrix);
+bool DLX(Matrix &matrix, vector<int> &solution, vector<int> &global_solution,
+         H_Stack &history) {
+  Column *column = choose_column(matrix);
   // matrix is empty => solution successfully found
   if (column == NULL) {
     return true;
   }
-  for (Node* row = column->down(); row != static_cast<Node*>(column);
+  for (Node *row = column->down(); row != static_cast<Node *>(column);
        row = row->down()) {
     update(matrix, solution, history, row);
     if (DLX(matrix, solution, global_solution, history)) {
@@ -309,16 +304,16 @@ bool DLX(Matrix& matrix, vector<int>& solution, vector<int>& global_solution,
   return false;
 }
 
-void update(Matrix& matrix, vector<int>& solution, H_Stack& history,
-            Node* row) {
+void update(Matrix &matrix, vector<int> &solution, H_Stack &history,
+            Node *row) {
 
   solution.push_back(row->row_id());
 
   RC_Stack temp_stack;
   RC_Item temp_item;
 
-  for (Node* i = row->right(); i != row; i = i->right()) {
-    for (Node* j = i->up(); j != i; j = j->up()) {
+  for (Node *i = row->right(); i != row; i = i->right()) {
+    for (Node *j = i->up(); j != i; j = j->up()) {
       if (j->column() == j)
         continue;
       matrix.remove_row(j);
@@ -332,7 +327,7 @@ void update(Matrix& matrix, vector<int>& solution, H_Stack& history,
     temp_stack.push(temp_item);
   }
 
-  for (Node* j = row->up(); j != row; j = j->up()) {
+  for (Node *j = row->up(); j != row; j = j->up()) {
     if (j->column() == j)
       continue;
     matrix.remove_row(j);
@@ -348,7 +343,7 @@ void update(Matrix& matrix, vector<int>& solution, H_Stack& history,
   history.push(temp_stack);
 }
 
-void downdate(Matrix& matrix, vector<int>& solution, H_Stack& history) {
+void downdate(Matrix &matrix, vector<int> &solution, H_Stack &history) {
   if (history.empty()) {
     return;
   }
@@ -367,21 +362,19 @@ void downdate(Matrix& matrix, vector<int>& solution, H_Stack& history) {
   history.pop();
 }
 
-vector<vector<bool>> BuildMatrix(
-    int width, int height, const vector<tuple<int, int, int, int>>& pieces) {
+vector<vector<bool>>
+BuildMatrix(int width, int height,
+            const vector<tuple<int, int, int, int>> &pieces) {
   int number_of_columns = width * height;
   vector<vector<bool>> matrix(pieces.size(),
                               vector<bool>(number_of_columns, 0));
 
   for (size_t k = 0; k < pieces.size(); ++k) {
     auto [x1, y1, x2, y2] = pieces[k];
-    // cout << "Piece: "s << x1 << " "s << y1 << " "s << x2 << " "s << y2 << endl;
     for (int i = y1; i < y2; ++i) {
       for (int j = x1; j < x2; ++j) {
-        // cout << i << " "s << j << " "s << i * width + j << endl;
         matrix[k][i * width + j] = 1;
       }
-      //   cout << endl;
     }
   }
 
@@ -419,7 +412,7 @@ int main() {
     }
     const vector<vector<bool>> map_matrix =
         BuildMatrix(map_width, map_height, pieces);
-    const auto& [solution_exists, least_pieces, pieces_ids] =
+    const auto &[solution_exists, least_pieces, pieces_ids] =
         FindLeastPiecesToCoverMap(map_matrix, pieces.size(),
                                   map_width * map_height);
 
