@@ -1,5 +1,6 @@
 #include "map_solver.h"
 
+namespace map_solver_huawei {
 /**
  * Builds boolean matrix for map pieces.
  *
@@ -20,7 +21,7 @@
  */
 vector<vector<bool>>
 BuildBoolMatrix(int width, int height,
-                const vector<tuple<int, int, int, int>> &pieces) {
+                const vector<std::tuple<int, int, int, int>> &pieces) {
   int number_of_columns = width * height;
   vector<vector<bool>> matrix(pieces.size(),
                               vector<bool>(number_of_columns, 0));
@@ -60,9 +61,11 @@ BuildBoolMatrix(int width, int height,
  */
 vector<int> FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
                                       int rows_count, int cols_count) {
-  Matrix matrix(map_matrix, rows_count, cols_count);
-  HistoryStack history;
+  lkedmatrix_huawei::Matrix matrix(map_matrix, rows_count, cols_count);
+  dlx_huawei::HistoryStack history;
   vector<int> solution, global_solution;
   DLX(matrix, solution, global_solution, history);
   return global_solution;
 }
+
+} // namespace map_solver_huawei

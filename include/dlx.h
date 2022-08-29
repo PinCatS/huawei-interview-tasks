@@ -7,7 +7,11 @@
 
 #include "linked_matrix.h"
 
-using namespace std;
+namespace dlx_huawei {
+
+using std::vector;
+
+using namespace lkedmatrix_huawei;
 
 /**
  * Represents either "row" or "column"
@@ -28,14 +32,14 @@ struct RowColumnItem {
 /**
  * Stacks all nodes that was updated (removed).
  */
-typedef stack<RowColumnItem> RowColumnStack;
+typedef std::stack<RowColumnItem> RowColumnStack;
 
 /**
  * Stacks the rows/columns that are removed
  * during recursive dfs traversal to restore
  * them back while backtracking.
  */
-typedef stack<RowColumnStack> HistoryStack;
+typedef std::stack<RowColumnStack> HistoryStack;
 
 /**
  * Implementation of the Knuth's AlgorithmX using DancingLinks technique.
@@ -88,4 +92,5 @@ void update(Matrix &matrix, vector<int> &solution, HistoryStack &history,
  */
 void restore(Matrix &matrix, vector<int> &solution, HistoryStack &history);
 
+} // namespace dlx_huawei
 #endif

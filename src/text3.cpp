@@ -37,9 +37,10 @@ int main() {
       pieces.push_back(ReadPieceCoordinates());
     }
     const vector<vector<bool>> map_matrix =
-        BuildBoolMatrix(map_width, map_height, pieces);
-    const vector<int> &pieces_ids = FindLeastPiecesToCoverMap(
-        map_matrix, pieces.size(), map_width * map_height);
+        map_solver_huawei::BuildBoolMatrix(map_width, map_height, pieces);
+    const vector<int> &pieces_ids =
+        map_solver_huawei::FindLeastPiecesToCoverMap(map_matrix, pieces.size(),
+                                                     map_width * map_height);
 
     int result = (pieces_ids.empty()) ? -1 : pieces_ids.size();
     cout << result << endl;

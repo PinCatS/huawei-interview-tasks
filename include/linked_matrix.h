@@ -3,7 +3,7 @@
 
 #include <vector>
 
-using namespace std;
+namespace lkedmatrix_huawei {
 
 class Column;
 
@@ -76,7 +76,7 @@ class Matrix {
                // first column
 public:
   Matrix();
-  Matrix(const vector<vector<bool>> &matrix, int m, int n);
+  Matrix(const std::vector<std::vector<bool>> &matrix, int m, int n);
   Node *head() const;
 
   bool is_empty() const;
@@ -89,4 +89,5 @@ public:
   ~Matrix();
 };
 
+} // namespace lkedmatrix_huawei
 #endif

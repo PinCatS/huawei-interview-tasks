@@ -1,5 +1,7 @@
 #include "dlx.h"
 
+namespace dlx_huawei {
+
 /**
  * Implementation of the Knuth's AlgorithmX using DancingLinks technique.
  *
@@ -141,3 +143,5 @@ void restore(Matrix &matrix, vector<int> &solution, HistoryStack &history) {
   }
   history.pop();
 }
+
+} // namespace dlx_huawei

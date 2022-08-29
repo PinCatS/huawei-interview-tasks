@@ -8,7 +8,9 @@
 #include "dlx.h"
 #include "linked_matrix.h"
 
-using namespace std;
+namespace map_solver_huawei {
+
+using std::vector;
 
 /**
  * Builds boolean matrix for map pieces.
@@ -30,7 +32,7 @@ using namespace std;
  */
 vector<vector<bool>>
 BuildBoolMatrix(int width, int height,
-                const vector<tuple<int, int, int, int>> &pieces);
+                const vector<std::tuple<int, int, int, int>> &pieces);
 
 /**
  * Searches for least number of pieces that covers entire map
@@ -56,4 +58,5 @@ BuildBoolMatrix(int width, int height,
 vector<int> FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
                                       int rows_count, int cols_count);
 
+} // namespace map_solver_huawei
 #endif

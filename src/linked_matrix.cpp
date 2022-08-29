@@ -1,5 +1,9 @@
 #include "linked_matrix.h"
 
+namespace lkedmatrix_huawei {
+
+using std::vector;
+
 /**
  * Default constructor that has only root node
  * which points to itself.
@@ -220,3 +224,5 @@ Matrix::~Matrix() {
   }
   delete _root;
 }
+
+} // namespace lkedmatrix_huawei
