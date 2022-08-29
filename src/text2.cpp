@@ -32,11 +32,12 @@ int main() {
       break;
     }
 
-    for (int i = 0; i < count_and_limit.first; ++i) {
+    auto [count, limit] = count_and_limit;
+    for (int i = 0; i < count; ++i) {
       numbers.push_back(ReadNumber());
     }
 
-    int greatest_number = FindGreatestNumber(numbers, count_and_limit.second);
+    int greatest_number = FindGreatestNumber(numbers, limit);
 
     cout << "Case "s << test_case_id << ": "s << greatest_number << endl
          << endl;
