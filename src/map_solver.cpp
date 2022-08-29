@@ -61,7 +61,7 @@ BuildBoolMatrix(int width, int height,
 vector<int> FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
                                       int rows_count, int cols_count) {
   Matrix matrix(map_matrix, rows_count, cols_count);
-  H_Stack history;
+  HistoryStack history;
   vector<int> solution, global_solution;
   DLX(matrix, solution, global_solution, history);
   return global_solution;
