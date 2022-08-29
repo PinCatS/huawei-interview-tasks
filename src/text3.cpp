@@ -40,12 +40,11 @@ int main() {
       pieces.push_back(ReadPieceCoordinates());
     }
     const vector<vector<bool>> map_matrix =
-        BuildMatrix(map_width, map_height, pieces);
-    const auto &[solution_exists, least_pieces, pieces_ids] =
-        FindLeastPiecesToCoverMap(map_matrix, pieces.size(),
-                                  map_width * map_height);
+        BuildBoolMatrix(map_width, map_height, pieces);
+    const vector<int> &pieces_ids = FindLeastPiecesToCoverMap(
+        map_matrix, pieces.size(), map_width * map_height);
 
-    int result = (solution_exists) ? least_pieces : -1;
+    int result = (pieces_ids.empty()) ? -1 : pieces_ids.size();
     cout << result << endl;
     pieces.clear();
   }

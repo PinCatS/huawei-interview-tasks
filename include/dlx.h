@@ -25,8 +25,4 @@ Column *choose_column(Matrix &matrix);
 void update(Matrix &matrix, vector<int> &solution, H_Stack &history, Node *row);
 void downdate(Matrix &matrix, vector<int> &solution, H_Stack &history);
 
-tuple<bool, int, vector<int>>
-FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
-                          int rows_count, int cols_count);
-
 #endif
