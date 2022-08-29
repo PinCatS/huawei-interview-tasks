@@ -15,7 +15,7 @@ bool DLX(Matrix &matrix, vector<int> &solution, vector<int> &global_solution,
         global_solution = solution;
       }
     }
-    downdate(matrix, solution, history);
+    restore(matrix, solution, history);
   }
   // no solution exists
   return false;
@@ -76,7 +76,7 @@ void update(Matrix &matrix, vector<int> &solution, H_Stack &history,
   history.push(temp_stack);
 }
 
-void downdate(Matrix &matrix, vector<int> &solution, H_Stack &history) {
+void restore(Matrix &matrix, vector<int> &solution, H_Stack &history) {
   if (history.empty()) {
     return;
   }

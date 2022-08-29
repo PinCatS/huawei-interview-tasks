@@ -23,6 +23,6 @@ bool DLX(Matrix &matrix, vector<int> &solution, vector<int> &global_solution,
          H_Stack &history);
 Column *choose_column(Matrix &matrix);
 void update(Matrix &matrix, vector<int> &solution, H_Stack &history, Node *row);
-void downdate(Matrix &matrix, vector<int> &solution, H_Stack &history);
+void restore(Matrix &matrix, vector<int> &solution, H_Stack &history);
 
 #endif
