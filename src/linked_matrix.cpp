@@ -1,10 +1,17 @@
 #include "linked_matrix.h"
 
+/**
+ * Default constructor that has only root node
+ * which points to itself.
+ */
 Matrix::Matrix() : _root(new Node()) {
   _root->set_right(_root);
   _root->set_left(_root);
 }
 
+/**
+ * @brief Construct that builds the Matrix from array-based boolean matrix
+ */
 Matrix::Matrix(const vector<vector<bool>> &matrix, int m, int n)
     : _root(new Node()) {
   if (m == 0 || n == 0) {
@@ -90,12 +97,21 @@ Matrix::Matrix(const vector<vector<bool>> &matrix, int m, int n)
   }
 }
 
+/**
+ * Returns the head of the Matrix (root node)
+ */
 Node *Matrix::head() const { return _root; }
 
 bool Matrix::is_empty() const {
   return _root->right() == _root && _root->left() == _root;
 }
 
+/**
+ * Returns number of rows by running through columns
+ * and getting the max number of nodes.
+ *
+ * Time complexity is: O(N) where N is a number of columns.
+ */
 int Matrix::number_of_rows() const {
   int max_column_size = 0;
   for (Node *node = _root->right(); node != _root; node = node->right()) {
@@ -107,6 +123,14 @@ int Matrix::number_of_rows() const {
   return max_column_size;
 }
 
+/**
+ * Removes row to which the input node represents.
+ *
+ * Note: Original links are stayed unchanged.
+ * That lets to restore the raw afterward.
+ *
+ * Here you can see the code that is called (Dancing Links)
+ */
 void Matrix::remove_row(Node *node) {
   if (node == NULL || node == _root || node->column() == node) {
     return;
@@ -124,6 +148,12 @@ void Matrix::remove_row(Node *node) {
   } while (cur != node); // stop when we're back where we started
 }
 
+/**
+ * Restores the row.
+ *
+ * Note: The code relies on the fact that remove_row
+ * doesn't change the original links of the removed nodes.
+ */
 void Matrix::restore_row(Node *node) {
   Node *cur = node;
 
@@ -135,6 +165,12 @@ void Matrix::restore_row(Node *node) {
   } while (cur != node);
 }
 
+/**
+ * Removes column to which the input node represents.
+ *
+ * Note: Original links are stayed unchanged.
+ * That lets to restore the column afterward.
+ */
 void Matrix::remove_column(Node *node) {
   if (node == NULL || node == _root) {
     return;
@@ -148,6 +184,12 @@ void Matrix::remove_column(Node *node) {
   } while (cur != node); // stop when we're back where we started
 }
 
+/**
+ * Restores the column.
+ *
+ * Note: The code relies on the fact that remove_column
+ * doesn't change the original links of the removed nodes.
+ */
 void Matrix::restore_column(Node *node) {
   Node *cur = node;
   do {
@@ -157,10 +199,13 @@ void Matrix::restore_column(Node *node) {
   } while (cur != node);
 }
 
+/**
+ * Frees the allocated resources of the matrix.
+ */
 Matrix::~Matrix() {
   Node *cur_col, *cur_node, *node_to_delete;
-  // a iterates through the column headers horizontally
-  // b iterates through each column vertically
+  // cur_col iterates through the column headers horizontally
+  // cur_node iterates through each column vertically
   cur_col = _root->right();
   while (cur_col != _root) {
     cur_node = cur_col->down();

@@ -7,6 +7,12 @@ using namespace std;
 
 class Column;
 
+/**
+ * Node represents a node in a DoubleLinked Matrix
+ * It has pointers to its left, right, up and down neighbors.
+ * It also stores information about what column it represents (ptr to Column
+ * node) and what row it represents (row_id)
+ */
 class Node {
   int _row_id;
   Column *_column;
@@ -35,6 +41,15 @@ public:
   void set_down(Node *down) { _down = down; }
 };
 
+/**
+ * Column is a special node that represents a Column
+ * in a Matrix.
+ *
+ * It also stores size that is number of nodes it has.
+ * It is used to efficiently find the Column with the
+ * minimum number of nodes: O(N) where N is a number of columns
+ * instead of O(N*M) where M is a number of rows.
+ */
 class Column : public Node {
   int _size;
 
@@ -46,9 +61,19 @@ public:
   void add_to_size(int n) { _size += n; }
 };
 
+/**
+ * DoubleLinked boolean Matrix that efficiently stores
+ * 1's for cases when data is sparse and usually it is
+ * for the problems where it is used.
+ *
+ * All nodes are connected to each other and double linked list
+ * is circular meaning the last column elements connected to the
+ * first column elements and vice versa. Also the last nodes in the
+ * row are connected to the their columns and vice versa.
+ */
 class Matrix {
-  Node *_root;
-
+  Node *_root; // serves as a head in a list and points to itself or to the
+               // first column
 public:
   Matrix();
   Matrix(const vector<vector<bool>> &matrix, int m, int n);

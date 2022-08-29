@@ -10,9 +10,6 @@
 
 using namespace std;
 
-/**
- * Reading int from the in stream.
- */
 int ReadTestCasesCount() {
   int count;
   cin >> count;
