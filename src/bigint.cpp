@@ -17,12 +17,38 @@ BigInt::BigInt() {}
  * Space complexity: O(n) where n is a number of digits
  */
 BigInt::BigInt(const string &number) {
-  for (int i = number.size() - 1; i >= 0; --i) {
+
+  // Handle leading zeroes
+  int first_non_zero_idx = 0;
+  while (first_non_zero_idx < static_cast<int>(number.size()) and
+         number[first_non_zero_idx] == '0') {
+    ++first_non_zero_idx;
+  }
+
+  // all zeroes string case
+  if (first_non_zero_idx == static_cast<int>(number.size())) {
+    return;
+  }
+
+  for (int i = number.size() - 1; i >= first_non_zero_idx; --i) {
     if (number[i] - '0' < 0 || number[i] - '0' > 9) {
       throw std::invalid_argument("Expected an integer, got "s + number +
                                   " (-->'"s + number[i] + "')"s);
     }
     digits.push_back(number[i] - '0');
+  }
+}
+
+/**
+ * Constructor that builds BigInt from unsigned long long.
+ *
+ * Time complexity: O(n) where n is a number of digits
+ * Space complexity: O(n) where n is a number of digits
+ */
+BigInt::BigInt(unsigned long long number) {
+  while (number != 0) {
+    digits.push_back(number % 10);
+    number /= 10;
   }
 }
 

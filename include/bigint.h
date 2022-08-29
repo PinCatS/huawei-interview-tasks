@@ -15,7 +15,7 @@ namespace bigint_huawei {
  *  for performance reasons (adding new digit to the end of the vector).
  *
  * Supports:
- *  - Only natural (positive integers) without leading zeroes
+ *  - Only natural (positive integers)
  *  - Default default constructor that creates number 0
  *  - Reading BigInt from in stream
  *  - Writing BigInt to out stream
@@ -29,12 +29,13 @@ class BigInt {
 
 public:
   BigInt();
-  BigInt(const std::string &);
+  BigInt(const std::string &number);
+  BigInt(unsigned long long number);
 
-  friend std::istream &operator>>(std::istream &, BigInt &);
-  friend std::ostream &operator<<(std::ostream &, const BigInt &);
+  friend std::istream &operator>>(std::istream &in, BigInt &number);
+  friend std::ostream &operator<<(std::ostream &out, const BigInt &number);
 
-  BigInt operator+(const BigInt &) const;
+  BigInt operator+(const BigInt &number) const;
 
   std::string to_string() const;
 };
