@@ -37,7 +37,7 @@ int main() {
       numbers.push_back(ReadNumber());
     }
 
-    int greatest_number = FindGreatestNumber(numbers, limit);
+    int greatest_number = gn_huawei::FindGreatestNumber(numbers, limit);
 
     cout << "Case "s << test_case_id << ": "s << greatest_number << endl
          << endl;

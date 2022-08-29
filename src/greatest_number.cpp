@@ -1,5 +1,7 @@
 #include "greatest_number.h"
 
+namespace gn_huawei {
+
 /**
  * Finds the closest to the limit sum.
  * Can be picked at most 4 numbers (numbers can be repeated).
@@ -24,14 +26,14 @@
  * Space complexity: O(N^2) where N is a number of numbers because we store all
  * two sums
  */
-int FindGreatestNumber(vector<int> &numbers, int limit) {
+int FindGreatestNumber(std::vector<int> &numbers, int limit) {
   int max_sum = 0;
 
   // Sort to break loops earlier in case we get number/sum > limit
   sort(numbers.begin(), numbers.end());
 
   // Find all sums of two elements
-  vector<int> two_sums;
+  std::vector<int> two_sums;
   for (size_t i = 0; i < numbers.size(); ++i) {
     // Found best max
     if (numbers[i] == limit) {
@@ -94,3 +96,5 @@ int FindGreatestNumber(vector<int> &numbers, int limit) {
 
   return max_sum;
 }
+
+} // namespace gn_huawei

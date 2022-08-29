@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <vector>
 
-using namespace std;
+namespace gn_huawei {
 
 /**
  * Finds the closest to the limit sum.
@@ -30,6 +30,7 @@ using namespace std;
  * Space complexity: O(N^2) where N is a number of numbers because we store all
  * two sums
  */
-int FindGreatestNumber(vector<int> &numbers, int limit);
+int FindGreatestNumber(std::vector<int> &numbers, int limit);
 
+} // namespace gn_huawei
 #endif
