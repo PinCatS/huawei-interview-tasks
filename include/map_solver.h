@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include <tuple>
+
 #include "dlx.h"
 #include "linked_matrix.h"
 

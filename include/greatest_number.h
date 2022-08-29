@@ -1,6 +1,7 @@
 #ifndef GREATEST_NUMBER_H
 #define GREATEST_NUMBER_H
 
+#include <algorithm>
 #include <vector>
 
 using namespace std;

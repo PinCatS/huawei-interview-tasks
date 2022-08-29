@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "dlx.h"

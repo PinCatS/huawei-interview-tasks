@@ -2,6 +2,7 @@
 #define DLX_H
 
 #include <stack>
+#include <tuple>
 #include <vector>
 
 #include "linked_matrix.h"
