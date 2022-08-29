@@ -2,6 +2,13 @@
 
 #include "bigint.h"
 
+using namespace std::literals::string_literals;
+using std::cin;
+using std::cout;
+using std::endl;
+
+using namespace bigint_huawei;
+
 /**
  * Reading int from the in stream.
  */
@@ -14,7 +21,7 @@ int ReadTestCasesCount() {
 /**
  * Reading two BigInt numbers in the line.
  */
-pair<BigInt, BigInt> ReadQuery() {
+std::pair<BigInt, BigInt> ReadQuery() {
   BigInt first, second;
   cin >> first >> second;
   return {first, second};
@@ -26,7 +33,7 @@ pair<BigInt, BigInt> ReadQuery() {
 int main() {
   int count = ReadTestCasesCount();
 
-  pair<BigInt, BigInt> numbers;
+  std::pair<BigInt, BigInt> numbers;
   for (int i = 0; i < count; ++i) {
     const auto &[first, second] = ReadQuery();
     cout << "Case "s << i + 1 << ": "s << endl

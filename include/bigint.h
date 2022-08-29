@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+namespace bigint_huawei {
 
 /**
  * BigInt works with integers of any length.
@@ -25,7 +25,7 @@ using namespace std;
  * All other features will be implemented in the next releases.
  */
 class BigInt {
-  vector<uint8_t> digits;
+  std::vector<uint8_t> digits;
 
 public:
   BigInt();
@@ -36,7 +36,8 @@ public:
 
   BigInt operator+(const BigInt &) const;
 
-  string to_string() const;
+  std::string to_string() const;
 };
 
+} // namespace bigint_huawei
 #endif

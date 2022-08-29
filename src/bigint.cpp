@@ -1,5 +1,10 @@
 #include "bigint.h"
 
+namespace bigint_huawei {
+
+using namespace std::literals::string_literals;
+using std::string;
+
 /**
  * Default constructor that builds 0.
  */
@@ -14,8 +19,8 @@ BigInt::BigInt() {}
 BigInt::BigInt(const string &number) {
   for (int i = number.size() - 1; i >= 0; --i) {
     if (number[i] - '0' < 0 || number[i] - '0' > 9) {
-      throw invalid_argument("Expected an integer, got "s + number + " (-->'"s +
-                             number[i] + "')"s);
+      throw std::invalid_argument("Expected an integer, got "s + number +
+                                  " (-->'"s + number[i] + "')"s);
     }
     digits.push_back(number[i] - '0');
   }
@@ -46,7 +51,7 @@ string BigInt::to_string() const {
  * Time complexity: O(n) where n is a number of digits (constructing BigInt)
  * Space complexity: O(n) where n is a number of digits
  */
-istream &operator>>(istream &in, BigInt &number) {
+std::istream &operator>>(std::istream &in, BigInt &number) {
   string input;
   in >> input;
   number = BigInt(input);
@@ -94,3 +99,5 @@ BigInt BigInt::operator+(const BigInt &number) const {
 
   return result;
 }
+
+} // namespace bigint_huawei
