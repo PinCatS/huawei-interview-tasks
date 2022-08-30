@@ -1,4 +1,4 @@
-# Test task for Software Developer position in Huawei
+# Test task for Software Developer position at Huawei
 It was asked to solve 3 interesting problems using C++ language.
 
 All of them were solved within time, space requirements and were covered with tests.
@@ -6,7 +6,6 @@ All of them were solved within time, space requirements and were covered with te
 Please see below problems solution notes, what was done and how to run them.
 
 ## Technologies
----------------
 * C++17
 * Make
 * Docker
@@ -16,8 +15,6 @@ Please see below problems solution notes, what was done and how to run them.
 `time` linux utility was used to check memory consumption (see below)
 
 ## How to run solved problems
------------------------------
-
 There are two options:
 
 * Run the project in the docker container (recommended way since you don't need to worry about dependencies)
@@ -28,17 +25,17 @@ There are two options:
 2. Go to the root directory of the project.
 3. Run the command `docker build --no-cache -t pincats/huawei:v1.0.0 .`. The command will build the image based on the Dockerfile instructions and tagged as `pincats/huawei:v1.0.0`.
 4. Run the command `docker run -d --name huawei pincats/huawei:v1.0.0`. The command will create and start the `huawei` container based on `pincats/huawei:v1.0.0` image. `-d` key tells to detach your terminal from the container process.
-5. Run the command `docker exec -it huawei bash`. The command will logon to huawei container and start bash terminal.
+5. Run the command `docker exec -it huawei bash`. The command will logon to `huawei` container and start bash terminal.
 6. Now you should be in the Ubuntu OS bash terminal in the `huawei` directory at the root of the project. The project was already built there. See the details below which are similar to both approaches.
 
 ### Run the project on the PC
 1. Clone the project to your PC.
 2. Go to the root directory of the project.
-3. Run make to get the executables.
-4. See the details below which are similar to both approaches.
+3. Run `make` to get the executables.
+4. See details below which are similar to both approaches.
 
 ### Common instructions to the approaches above
-1. At that stage you should be in the root directory of the projects and it was successfully built.
+1. At that stage you should be in the root directory of the project and it was successfully built.
 2. There should be `bin` folder with the problems executables:
 * `text1` - text1 problem (addition of two big numbers)
 * `text2` - text2 problem (Great Number)
@@ -49,7 +46,6 @@ There are two options:
 6. Test executables will be in the `bin/tests` folder after you run `make test` just in case you want to run them separately.
 
 ## Project folder structure
----------------------------
 * `src` folder contains all source code.
 
 * `src/text<X>.cpp` files correspond to `main`  source code for `text1`, `text2`, `text3` problems respectively.
@@ -64,7 +60,6 @@ There are two options:
 * `Makefile` contains instructions how to build the project. Useful commands are: `make` to build the project,`make run` to run all problems against the input data, `make tests` to build and run tests, `make clean` to remove `bin`, `obj` folders.
 
 ## Problems design notes
-------------------------
 Please see the more detailed notes in the headers. The below are the key ideas.
 ### Addition of two big numbers (text1) problem
 
@@ -75,7 +70,7 @@ The digits of input number are stored in __reverse__ order due to efficiency to 
 I implemented enough functionality to solve given problem. There are many functionality that can be added in the future.
 The most big restriction is it only supports __positive__ numbers (natural). The input is validated against that restriction.
 
-Most of the operations time complexity is O(n) where n is a number of digits. (see the comments in the `bigint.h`)
+Most operations time complexity is O(n) where n is a number of digits. (see the comments in the `bigint.h`)
 
 #### Smoke run on input data:
 
@@ -153,8 +148,8 @@ In the corner case when the elements contain max allowed values `1000000000`, th
 **Important note**: `the players choose no more than four integers from them` I understand as `players can pick 1/2/3/4 numbers` and solution takes it into account.
 At the real case, I would clarify it from the customer. It might be treated as `players should alway pick any 4`.
 
-Time complexity is: O(n<sup>2</sup>logn) (see details in the greatest_number.h)
-Space complexity: O(n<sup>2</sup>) where n is a number of numbers because we store all `two sums`
+* Time complexity is: O(n<sup>2</sup>logn) (see details in the greatest_number.h)
+* Space complexity: O(n<sup>2</sup>) where n is a number of numbers because we store all `two sums`
 
 #### Smoke run on input data:
 
@@ -216,15 +211,15 @@ Case 2: 80
 ```
 
 ### Treasury Map (text3) problem
-The problem can be reduce to the NP-problem called `Exact Cover` and is solved using Knuth's AlgorithmX recursive nondeterministic algorithm. The implementation of the algorithm is called `DLX (DancingLinkX)` because it uses `Dancing Link` technique.
+The problem can be reduced to the NP-problem called `Exact Cover` and is solved using Knuth's AlgorithmX recursive nondeterministic algorithm. The implementation of the algorithm is called `DLX (DancingLinkX)` because it uses `Dancing Link` technique.
 
-Algorithm uses `Linked Matrix` - data structure uses `Double Linked Lists` to represent the matrix. All nodes are connected in double linked list cycle. Each node pointers to the left/right (row) and to the up/down (column) neighbors. Nodes represent '1's in a matrix. Thus, `Linked Matrix` data structure is very efficient way to represent boolean matrix since we don't need to store '0's and for the `Exact Cover Problems` the matrix is usually very sparse.
+Algorithm uses `Linked Matrix` - data structure uses `Double Linked Lists` to represent the matrix. All nodes are connected in double linked list cycle. Each node points to the left/right (row) and to the up/down (column) neighbors. Nodes represent '1's in a matrix. Thus, `Linked Matrix` data structure is very efficient way to represent boolean matrix since we don't need to store '0's and for the `Exact Cover Problems` the matrix is usually very sparse.
 
 How reduction to `Exact Cover` problem accomplished? Each point (1x1 square) of 2-d map is translated to 1-d map and each point represents a column. For example, if there is a 1x1 square with coordinates `(0, 1), (1, 2)` within `2x2 map`, the square point is translated into `2` using formula `y1 * map_width + x1`. Each `map piece` represents a row. Piece points are marked as '1's in a matrix.
 
-`linked_matrix.h` describes `Linked Matrix` data structure.
-`dlx.h` describes `DLX` algorithm. Important note - it doesn't stop as soon as finds first solution but continues to get the best one. (least number of pieces)
-`map_solver.h` builds boolean matrix (reduces problem to the `Exact Cover`) and solves it.
+* `linked_matrix.h` describes `Linked Matrix` data structure.
+* `dlx.h` describes `DLX` algorithm. Important note - it doesn't stop as soon as finds first solution but continues to get the best one. (least number of pieces)
+* `map_solver.h` builds boolean matrix (reduces problem to the `Exact Cover`) and solves it.
 
 #### Smoke run on input data:
 
