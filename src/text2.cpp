@@ -10,26 +10,26 @@
 
 using namespace std;
 
-unsigned int ReadNumber() {
-  unsigned int number;
+int ReadNumber() {
+  int number;
   cin >> number;
   return number;
 }
 
-pair<unsigned int, unsigned int> ReadCountAndLimit() {
-  unsigned int numbers_count, limit;
+pair<int, int> ReadCountAndLimit() {
+  int numbers_count, limit;
   cin >> numbers_count >> limit;
   return {numbers_count, limit};
 }
 
-bool IsEndOfTestCases(const pair<unsigned int, unsigned int> &values) {
+bool IsEndOfTestCases(const pair<int, int> &values) {
   return (values.first == 0 and values.second == 0);
 }
 
 int main() {
-  unsigned int test_case_id = 1;
-  vector<unsigned int> numbers;
-  pair<unsigned int, unsigned int> count_and_limit;
+  int test_case_id = 1;
+  vector<int> numbers;
+  pair<int, int> count_and_limit;
   do {
     count_and_limit = ReadCountAndLimit();
     if (IsEndOfTestCases(count_and_limit)) {
@@ -39,7 +39,7 @@ int main() {
     auto [count, limit] = count_and_limit;
     if (count < 0 || count > MAX_NUMBERS_COUNT) {
       cerr << "Invalid numbers of numbers: "s << count
-           << ". Should be in the range [0, "s << MAX_NUMBERS_COUNT << "]."
+           << ". Should be in the range [0, "s << MAX_NUMBERS_COUNT << "]."s
            << endl;
       return -1;
     }
@@ -50,19 +50,18 @@ int main() {
       return -1;
     }
 
-    for (unsigned int i = 0; i < count; ++i) {
-      unsigned int number = ReadNumber();
+    for (int i = 0; i < count; ++i) {
+      int number = ReadNumber();
       if (number < 0 || number > MAX_NUMBER_VALUE) {
         cerr << "Invalid number value: "s << number
-             << ". Should be in the range [0, "s << MAX_NUMBER_VALUE << "]."
+             << ". Should be in the range [0, "s << MAX_NUMBER_VALUE << "]."s
              << endl;
         return -1;
       }
       numbers.push_back(number);
     }
 
-    unsigned int greatest_number =
-        gn_huawei::FindGreatestNumber(numbers, limit);
+    int greatest_number = gn_huawei::FindGreatestNumber(numbers, limit);
 
     cout << "Case "s << test_case_id << ": "s << greatest_number << endl
          << endl;

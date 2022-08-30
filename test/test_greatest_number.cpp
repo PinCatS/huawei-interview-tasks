@@ -8,7 +8,7 @@
 
 #include "greatest_number.h"
 
-#define NUM_TESTS 4
+#define NUM_TESTS 5
 
 using namespace std::literals::string_literals;
 using std::cout;
@@ -22,7 +22,7 @@ using namespace gn_huawei;
  * **************************************************************************************************/
 void TestEmptyListOfNumbers() {
   cout << "TestEmptyListOfNumbers"s << endl;
-  vector<unsigned int> numbers;
+  vector<int> numbers;
 
   int gn = FindGreatestNumber(numbers, 0);
   assert((gn == 0));
@@ -33,17 +33,17 @@ void TestEmptyListOfNumbers() {
 
 void TestNumbersAllGreaterThanLimit() {
   cout << "TestNumbersAllGreaterThanLimit"s << endl;
-  vector<unsigned int> numbers = {11, 30, 20, 40, 90, 60};
+  vector<int> numbers = {11, 30, 20, 40, 90, 60};
 
-  unsigned int gn = FindGreatestNumber(numbers, 10);
+  int gn = FindGreatestNumber(numbers, 10);
   assert((gn == 0));
 }
 
 void TestNumbersWithNonZeroLimit() {
   cout << "TestNumbersWithNonZeroLimit"s << endl;
-  vector<unsigned int> numbers = {100, 2};
+  vector<int> numbers = {100, 2};
 
-  unsigned int gn = FindGreatestNumber(numbers, 10);
+  int gn = FindGreatestNumber(numbers, 10);
   assert((gn == 8));
 
   numbers = {4, 4, 4, 4};
@@ -61,6 +61,15 @@ void TestNumbersWithNonZeroLimit() {
   numbers = {3, 8, 99, 98};
   gn = FindGreatestNumber(numbers, 100);
   assert((gn == 99));
+}
+
+void TestNumbersWithMaxValues() {
+  cout << "TestNumbersWithMaxValues"s << endl;
+  vector<int> numbers = {1000000000, 1000000000, 1000000000,
+                         1000000000, 1000000000, 1000000000};
+
+  int gn = FindGreatestNumber(numbers, 1000000000);
+  assert((gn == 1000000000));
 }
 
 /**
@@ -86,14 +95,12 @@ void TestRandomNumbersAndLimit() {
   std::uniform_int_distribution<int> distribution_selected_numbers_count(1, 4);
 
   for (int i = 0; i < 100; ++i) {
-    unsigned int rand_limit = distribution_limit_and_number(generator);
-    unsigned int numbers_len = distribution_numbers_len(generator);
-    unsigned int count_to_reach_max =
-        distribution_selected_numbers_count(generator);
-    unsigned int number_to_get_expected_answer =
-        rand_limit / count_to_reach_max;
+    int rand_limit = distribution_limit_and_number(generator);
+    int numbers_len = distribution_numbers_len(generator);
+    int count_to_reach_max = distribution_selected_numbers_count(generator);
+    int number_to_get_expected_answer = rand_limit / count_to_reach_max;
 
-    vector<unsigned int> numbers(numbers_len, 0);
+    vector<int> numbers(numbers_len, 0);
     // generate random numbers
     for (size_t j = 0; j < numbers.size(); ++j) {
       numbers[i] = distribution_limit_and_number(generator);
@@ -108,11 +115,11 @@ void TestGreatestNumberTime() {
   cout << "TestNumbersWithNonZeroLimit"s << endl;
   cout << "There are 1000 numbers of all ones and the limit is 1000000000"
        << endl;
-  unsigned int max_numbers_len = 1000;
-  unsigned int max_limit = 1000000000;
-  vector<unsigned int> numbers(max_numbers_len, 1);
+  int max_numbers_len = 1000;
+  int max_limit = 1000000000;
+  vector<int> numbers(max_numbers_len, 1);
   std::clock_t start = std::clock();
-  unsigned int gn = FindGreatestNumber(numbers, max_limit);
+  int gn = FindGreatestNumber(numbers, max_limit);
   assert((gn == 4));
   std::clock_t end = std::clock();
   std::cout << "Elapsed time = " << 1000.0 * (end - start) / CLOCKS_PER_SEC
@@ -125,9 +132,8 @@ void TestGreatestNumberTime() {
 
 typedef void (*PROC)(void);
 const PROC tests[NUM_TESTS] = {
-    &TestEmptyListOfNumbers,
-    &TestNumbersAllGreaterThanLimit,
-    &TestNumbersWithNonZeroLimit,
+    &TestEmptyListOfNumbers,      &TestNumbersAllGreaterThanLimit,
+    &TestNumbersWithNonZeroLimit, &TestNumbersWithMaxValues,
     &TestGreatestNumberTime,
 };
 

@@ -28,8 +28,7 @@ namespace gn_huawei {
  * Space complexity: O(N^2) where N is a number of numbers because we store all
  * two sums
  */
-unsigned int FindGreatestNumber(std::vector<unsigned int> &numbers,
-                                unsigned int limit) {
+int FindGreatestNumber(std::vector<int> &numbers, int limit) {
   unsigned int max_sum = 0;
 
   // Sort to break loops earlier in case we get number/sum > limit
@@ -49,24 +48,24 @@ unsigned int FindGreatestNumber(std::vector<unsigned int> &numbers,
     }
 
     // Update max_sum in case we can get the largest with only one number
-    if (max_sum < numbers[i]) {
+    if (max_sum < static_cast<unsigned int>(numbers[i])) {
       max_sum = numbers[i];
     }
 
     for (size_t j = i; j < numbers.size(); ++j) {
       unsigned int sum = numbers[i] + numbers[j];
       // Found best max
-      if (sum == limit) {
+      if (sum == static_cast<unsigned int>(limit)) {
         return sum;
       }
 
       // All next sums will be above the limit
-      if (sum > limit) {
+      if (sum > static_cast<unsigned int>(limit)) {
         break;
       }
 
       // Update max_sum in case we can get the largest with only one number
-      if (max_sum < sum) {
+      if (max_sum < static_cast<unsigned int>(sum)) {
         max_sum = sum;
       }
 
@@ -80,17 +79,17 @@ unsigned int FindGreatestNumber(std::vector<unsigned int> &numbers,
   // Sum two sums. Instead of summing all combinations,
   // do binary search to improve performance.
   for (size_t i = 0; i < two_sums.size(); ++i) {
-    unsigned int left = 0;
-    unsigned int right = two_sums.size() - 1;
+    int left = 0;
+    int right = two_sums.size() - 1;
     while (left < right) {
-      unsigned int mid = left + (right - left) / 2;
+      int mid = left + (right - left) / 2;
       unsigned int sum = two_sums[i] + two_sums[mid];
 
-      if (sum == limit) {
+      if (sum == static_cast<unsigned int>(limit)) {
         return sum;
       }
 
-      if (sum < limit) {
+      if (sum < static_cast<unsigned int>(limit)) {
         left = mid + 1;
       } else {
         right = mid - 1;
@@ -102,7 +101,7 @@ unsigned int FindGreatestNumber(std::vector<unsigned int> &numbers,
       max_sum = sum;
     }
 
-    if (sum > limit) {
+    if (sum > static_cast<unsigned int>(limit)) {
       break;
     }
   }

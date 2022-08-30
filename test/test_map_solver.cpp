@@ -20,33 +20,27 @@ using namespace map_solver_huawei;
 /****************************************************************************************************
  *                                   helper function
  * **************************************************************************************************/
-vector<unsigned int> solve(
-    unsigned int width, unsigned int height,
-    const vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>>
-        &pieces) {
+vector<int> solve(int width, int height,
+                  const vector<tuple<int, int, int, int>> &pieces) {
   const vector<vector<bool>> map_matrix =
       BuildBoolMatrix(width, height, pieces);
   return FindLeastPiecesToCoverMap(map_matrix, pieces.size(), width * height);
 }
 
-vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>>
-generate_pieces(unsigned int map_width, unsigned int map_height,
-                unsigned int max_pieces_number) {
+vector<tuple<int, int, int, int>> generate_pieces(int map_width, int map_height,
+                                                  int max_pieces_number) {
   std::random_device generator;
-  std::uniform_int_distribution<unsigned int> distribution_height(1,
-                                                                  map_height);
-  std::uniform_int_distribution<unsigned int> distribution_width(1, map_width);
+  std::uniform_int_distribution<int> distribution_height(1, map_height);
+  std::uniform_int_distribution<int> distribution_width(1, map_width);
 
-  vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>> pieces;
-  for (unsigned int i = 1; i <= max_pieces_number; ++i) {
-    unsigned int width = distribution_width(generator);
-    unsigned int height = distribution_height(generator);
-    std::uniform_int_distribution<unsigned int> distribution_x(0, map_width -
-                                                                      width);
-    std::uniform_int_distribution<unsigned int> distribution_y(0, map_height -
-                                                                      height);
-    unsigned int x = distribution_x(generator);
-    unsigned int y = distribution_y(generator);
+  vector<tuple<int, int, int, int>> pieces;
+  for (int i = 1; i <= max_pieces_number; ++i) {
+    int width = distribution_width(generator);
+    int height = distribution_height(generator);
+    std::uniform_int_distribution<int> distribution_x(0, map_width - width);
+    std::uniform_int_distribution<int> distribution_y(0, map_height - height);
+    int x = distribution_x(generator);
+    int y = distribution_y(generator);
     pieces.push_back(std::make_tuple(x, y, x + width, y + height));
   }
 
@@ -57,12 +51,11 @@ generate_pieces(unsigned int map_width, unsigned int map_height,
  * **************************************************************************************************/
 void TestMapWithMinWidthAndHeight() {
   cout << "TestMapWithMinWidthAndHeight"s << endl;
-  unsigned int map_width = 1;
-  unsigned int map_height = 1;
-  vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>> pieces =
-      {{0, 0, 1, 1}};
+  int map_width = 1;
+  int map_height = 1;
+  vector<tuple<int, int, int, int>> pieces = {{0, 0, 1, 1}};
 
-  const vector<unsigned int> &pieces_ids = solve(map_width, map_height, pieces);
+  const vector<int> &pieces_ids = solve(map_width, map_height, pieces);
 
   assert((pieces_ids.size() == 1));
   assert((pieces_ids[0] == 0));
@@ -70,15 +63,14 @@ void TestMapWithMinWidthAndHeight() {
 
 void Test2x2Map() {
   cout << "Test2x2Map"s << endl;
-  unsigned int map_width = 2;
-  unsigned int map_height = 2;
+  int map_width = 2;
+  int map_height = 2;
 
   // one piece that cover all map
-  vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>> pieces =
-      {{0, 0, 2, 2}};
-  vector<unsigned int> expected_pieces = {0};
+  vector<tuple<int, int, int, int>> pieces = {{0, 0, 2, 2}};
+  vector<int> expected_pieces = {0};
 
-  vector<unsigned int> pieces_ids = solve(map_width, map_height, pieces);
+  vector<int> pieces_ids = solve(map_width, map_height, pieces);
 
   assert((pieces_ids.size() == 1));
   assert((pieces_ids == expected_pieces));
@@ -128,29 +120,27 @@ void Test2x2Map() {
 
 void Test3x3MapForOverlapCase() {
   cout << "Test3x3MapForOverlapCase"s << endl;
-  unsigned int map_width = 3;
-  unsigned int map_height = 3;
+  int map_width = 3;
+  int map_height = 3;
 
   // two pieces that cover map together but overlap need
-  vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>> pieces =
-      {{0, 0, 2, 2}, {0, 1, 2, 3}};
+  vector<tuple<int, int, int, int>> pieces = {{0, 0, 2, 2}, {0, 1, 2, 3}};
 
-  vector<unsigned int> pieces_ids = solve(map_width, map_height, pieces);
+  vector<int> pieces_ids = solve(map_width, map_height, pieces);
 
   assert((pieces_ids.size() == 0));
 }
 
 void TestMapDifferentSizes() {
   cout << "TestMapDifferentSizes"s << endl;
-  unsigned int map_width = 5;
-  unsigned int map_height = 5;
+  int map_width = 5;
+  int map_height = 5;
 
   // one piece covers entire map
-  vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>> pieces =
-      {{0, 0, 5, 5}};
-  vector<unsigned int> expected_pieces = {0};
+  vector<tuple<int, int, int, int>> pieces = {{0, 0, 5, 5}};
+  vector<int> expected_pieces = {0};
 
-  vector<unsigned int> pieces_ids = solve(map_width, map_height, pieces);
+  vector<int> pieces_ids = solve(map_width, map_height, pieces);
 
   assert((pieces_ids.size() == 1));
   assert((pieces_ids == expected_pieces));
@@ -181,22 +171,22 @@ void TestMapDifferentSizes() {
 void TestMapSolverRandom() {
   cout << "TestMapSolverRandom"s << endl;
 
-  unsigned int map_max_side_len = 30;
-  unsigned int max_pieces = 100;
-  unsigned int number_of_runs = 100;
+  int map_max_side_len = 30;
+  int max_pieces = 100;
+  int number_of_runs = 100;
 
   std::random_device generator;
   std::uniform_int_distribution<int> distribution_map(1, map_max_side_len);
 
-  for (unsigned int i = 0; i < number_of_runs; ++i) {
-    unsigned int map_width = distribution_map(generator);
-    unsigned int map_height = distribution_map(generator);
-    vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>>
-        pieces = generate_pieces(map_width, map_height, max_pieces - 1);
+  for (int i = 0; i < number_of_runs; ++i) {
+    int map_width = distribution_map(generator);
+    int map_height = distribution_map(generator);
+    vector<tuple<int, int, int, int>> pieces =
+        generate_pieces(map_width, map_height, max_pieces - 1);
     // push back last piece that cover map to be able to assert
     pieces.push_back(std::make_tuple(0, 0, map_width, map_height));
 
-    vector<unsigned int> pieces_ids = solve(map_width, map_height, pieces);
+    vector<int> pieces_ids = solve(map_width, map_height, pieces);
 
     assert((pieces_ids.size() == 1));
   }
@@ -206,18 +196,18 @@ void TestMapSolverTime() {
   cout << "TestMapSolverTime"s << endl;
   cout << "There are 100 pieces and map of 30x30" << endl;
 
-  unsigned int map_max_side_len = 30;
-  unsigned int max_pieces = 100;
-  unsigned int map_width = map_max_side_len;
-  unsigned int map_height = map_max_side_len;
+  int map_max_side_len = 30;
+  int max_pieces = 100;
+  int map_width = map_max_side_len;
+  int map_height = map_max_side_len;
 
-  vector<tuple<unsigned int, unsigned int, unsigned int, unsigned int>> pieces =
+  vector<tuple<int, int, int, int>> pieces =
       generate_pieces(map_width, map_height, max_pieces - 1);
   // push back last piece that cover map to be able to assert
   pieces.push_back(std::make_tuple(0, 0, map_width, map_height));
 
   std::clock_t start = std::clock();
-  vector<unsigned int> pieces_ids = solve(map_width, map_height, pieces);
+  vector<int> pieces_ids = solve(map_width, map_height, pieces);
   assert((pieces_ids.size() == 1));
   std::clock_t end = std::clock();
   std::cout << "Elapsed time = " << 1000.0 * (end - start) / CLOCKS_PER_SEC
@@ -230,12 +220,9 @@ void TestMapSolverTime() {
 
 typedef void (*PROC)(void);
 const PROC tests[NUM_TESTS] = {
-    &TestMapWithMinWidthAndHeight,
-    &Test2x2Map,
-    &Test3x3MapForOverlapCase,
-    &TestMapDifferentSizes,
-    &TestMapSolverTime,
-    &TestMapSolverRandom,
+    &TestMapWithMinWidthAndHeight, &Test2x2Map,
+    &Test3x3MapForOverlapCase,     &TestMapDifferentSizes,
+    &TestMapSolverRandom,          &TestMapSolverTime,
 };
 
 // run all tests

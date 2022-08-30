@@ -30,9 +30,8 @@ using std::vector;
  * Space complexity is: width*height*N since we build the matrix.
  */
 vector<vector<bool>>
-BuildBoolMatrix(unsigned int width, unsigned int height,
-                const vector<std::tuple<unsigned int, unsigned int,
-                                        unsigned int, unsigned int>> &pieces);
+BuildBoolMatrix(int width, int height,
+                const vector<std::tuple<int, int, int, int>> &pieces);
 
 /**
  * Searches for least number of pieces that covers entire map
@@ -55,9 +54,8 @@ BuildBoolMatrix(unsigned int width, unsigned int height,
  * @param cols_count - corresponds to map width multiplied by map height
  * @return List of pieces ids (least number of pieces)
  */
-vector<unsigned int>
-FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
-                          unsigned int rows_count, unsigned int cols_count);
+vector<int> FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
+                                      int rows_count, int cols_count);
 
 } // namespace map_solver_huawei
 #endif

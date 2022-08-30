@@ -17,8 +17,8 @@ namespace dlx_huawei {
  * @param history
  * @return true if solution found and false if it doesn't exist
  */
-bool DLX(Matrix &matrix, vector<unsigned int> &solution,
-         vector<unsigned int> &global_solution, HistoryStack &history) {
+bool DLX(Matrix &matrix, vector<int> &solution, vector<int> &global_solution,
+         HistoryStack &history) {
   Column *column = choose_column(matrix);
   // matrix is empty => solution successfully found
   if (column == NULL) {
@@ -74,8 +74,8 @@ Column *choose_column(Matrix &matrix) {
  * Time complexity: O(N*M) where N - number of rows, M - number of columns.
  * It is the worst case when all matrix is 1's.
  */
-void update(Matrix &matrix, vector<unsigned int> &solution,
-            HistoryStack &history, Node *row) {
+void update(Matrix &matrix, vector<int> &solution, HistoryStack &history,
+            Node *row) {
 
   solution.push_back(row->row_id());
 
@@ -125,8 +125,7 @@ void update(Matrix &matrix, vector<unsigned int> &solution,
  *
  * @param history - contains the history what row/column nodes were removed
  */
-void restore(Matrix &matrix, vector<unsigned int> &solution,
-             HistoryStack &history) {
+void restore(Matrix &matrix, vector<int> &solution, HistoryStack &history) {
   if (history.empty()) {
     return;
   }
