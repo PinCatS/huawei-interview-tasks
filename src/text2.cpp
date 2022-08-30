@@ -4,6 +4,10 @@
 
 #include "greatest_number.h"
 
+#define MAX_NUMBERS_COUNT 1000
+#define MAX_LIMIT 1000000000
+#define MAX_NUMBER_VALUE 1000000000
+
 using namespace std;
 
 unsigned int ReadNumber() {
@@ -33,8 +37,28 @@ int main() {
     }
 
     auto [count, limit] = count_and_limit;
+    if (count < 0 || count > MAX_NUMBERS_COUNT) {
+      cerr << "Invalid numbers of numbers: "s << count
+           << ". Should be in the range [0, "s << MAX_NUMBERS_COUNT << "]."
+           << endl;
+      return -1;
+    }
+
+    if (limit < 0 || limit > MAX_LIMIT) {
+      cerr << "Invalid limit: "s << limit << ". Should be in the range [0, "s
+           << MAX_LIMIT << "]." << endl;
+      return -1;
+    }
+
     for (unsigned int i = 0; i < count; ++i) {
-      numbers.push_back(ReadNumber());
+      unsigned int number = ReadNumber();
+      if (number < 0 || number > MAX_NUMBER_VALUE) {
+        cerr << "Invalid number value: "s << number
+             << ". Should be in the range [0, "s << MAX_NUMBER_VALUE << "]."
+             << endl;
+        return -1;
+      }
+      numbers.push_back(number);
     }
 
     unsigned int greatest_number =
