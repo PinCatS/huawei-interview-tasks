@@ -20,16 +20,17 @@ namespace map_solver_huawei {
  * Space complexity is: width*height*N since we build the matrix.
  */
 vector<vector<bool>>
-BuildBoolMatrix(int width, int height,
-                const vector<std::tuple<int, int, int, int>> &pieces) {
-  int number_of_columns = width * height;
+BuildBoolMatrix(unsigned int width, unsigned int height,
+                const vector<std::tuple<unsigned int, unsigned int,
+                                        unsigned int, unsigned int>> &pieces) {
+  unsigned int number_of_columns = width * height;
   vector<vector<bool>> matrix(pieces.size(),
                               vector<bool>(number_of_columns, 0));
 
   for (size_t k = 0; k < pieces.size(); ++k) {
     auto [x1, y1, x2, y2] = pieces[k];
-    for (int i = y1; i < y2; ++i) {
-      for (int j = x1; j < x2; ++j) {
+    for (unsigned int i = y1; i < y2; ++i) {
+      for (unsigned int j = x1; j < x2; ++j) {
         matrix[k][i * width + j] = 1;
       }
     }
@@ -59,11 +60,12 @@ BuildBoolMatrix(int width, int height,
  * @param cols_count - corresponds to map width multiplied by map height
  * @return List of pieces ids (least number of pieces)
  */
-vector<int> FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
-                                      int rows_count, int cols_count) {
+vector<unsigned int>
+FindLeastPiecesToCoverMap(const vector<vector<bool>> &map_matrix,
+                          unsigned int rows_count, unsigned int cols_count) {
   lkedmatrix_huawei::Matrix matrix(map_matrix, rows_count, cols_count);
   dlx_huawei::HistoryStack history;
-  vector<int> solution, global_solution;
+  vector<unsigned int> solution, global_solution;
   DLX(matrix, solution, global_solution, history);
   return global_solution;
 }
