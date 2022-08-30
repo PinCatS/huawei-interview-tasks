@@ -28,14 +28,15 @@ namespace gn_huawei {
  * Space complexity: O(N^2) where N is a number of numbers because we store all
  * two sums
  */
-int FindGreatestNumber(std::vector<int> &numbers, int limit) {
-  int max_sum = 0;
+unsigned int FindGreatestNumber(std::vector<unsigned int> &numbers,
+                                unsigned int limit) {
+  unsigned int max_sum = 0;
 
   // Sort to break loops earlier in case we get number/sum > limit
   sort(numbers.begin(), numbers.end());
 
   // Find all sums of two elements
-  std::vector<int> two_sums;
+  std::vector<unsigned int> two_sums;
   for (size_t i = 0; i < numbers.size(); ++i) {
     // Found best max
     if (numbers[i] == limit) {
@@ -53,7 +54,7 @@ int FindGreatestNumber(std::vector<int> &numbers, int limit) {
     }
 
     for (size_t j = i; j < numbers.size(); ++j) {
-      int sum = numbers[i] + numbers[j];
+      unsigned int sum = numbers[i] + numbers[j];
       // Found best max
       if (sum == limit) {
         return sum;
@@ -79,11 +80,11 @@ int FindGreatestNumber(std::vector<int> &numbers, int limit) {
   // Sum two sums. Instead of summing all combinations,
   // do binary search to improve performance.
   for (size_t i = 0; i < two_sums.size(); ++i) {
-    int left = 0;
-    int right = two_sums.size() - 1;
+    unsigned int left = 0;
+    unsigned int right = two_sums.size() - 1;
     while (left < right) {
-      int mid = left + (right - left) / 2;
-      int sum = two_sums[i] + two_sums[mid];
+      unsigned int mid = left + (right - left) / 2;
+      unsigned int sum = two_sums[i] + two_sums[mid];
 
       if (sum == limit) {
         return sum;
@@ -96,7 +97,7 @@ int FindGreatestNumber(std::vector<int> &numbers, int limit) {
       }
     }
 
-    int sum = two_sums[i] + two_sums[left];
+    unsigned int sum = two_sums[i] + two_sums[left];
     if (max_sum < sum) {
       max_sum = sum;
     }

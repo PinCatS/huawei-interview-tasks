@@ -32,7 +32,8 @@ namespace gn_huawei {
  * Space complexity: O(N^2) where N is a number of numbers because we store all
  * two sums
  */
-int FindGreatestNumber(std::vector<int> &numbers, int limit);
+unsigned int FindGreatestNumber(std::vector<unsigned int> &numbers,
+                                unsigned int limit);
 
 } // namespace gn_huawei
 #endif
