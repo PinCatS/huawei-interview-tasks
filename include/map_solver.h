@@ -1,9 +1,8 @@
 #ifndef MAP_SOLVER_H
 #define MAP_SOLVER_H
 
-#include <vector>
-
 #include <tuple>
+#include <vector>
 
 #include "dlx.h"
 #include "linked_matrix.h"
