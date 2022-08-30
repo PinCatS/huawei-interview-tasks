@@ -46,6 +46,11 @@ BigInt::BigInt(const string &number) {
  * Space complexity: O(n) where n is a number of digits
  */
 BigInt::BigInt(unsigned long long number) {
+  if (number < 0) {
+    throw std::invalid_argument("Expected positive integer, got "s +
+                                std::to_string(number));
+  }
+
   while (number != 0) {
     digits.push_back(number % 10);
     number /= 10;

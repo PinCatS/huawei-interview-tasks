@@ -40,6 +40,15 @@ void TestUnsignedLongLongConstructor() {
 
   BigInt b(100000000);
   assert((b.to_string() == "100000000"s));
+
+  int negative_number = -1;
+  try {
+    BigInt negative_number(-1); // without sign
+  } catch (std::invalid_argument &e) {
+    string expected_message =
+        "Expected positive integer, got "s + std::to_string(negative_number);
+    assert(e.what() == expected_message);
+  }
 }
 
 void TestStringConstructor() {
