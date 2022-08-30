@@ -3,6 +3,7 @@
 #include "bigint.h"
 
 using namespace std::literals::string_literals;
+using std::cerr;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -32,12 +33,20 @@ std::pair<BigInt, BigInt> ReadQuery() {
  */
 int main() {
   int count = ReadTestCasesCount();
-
-  std::pair<BigInt, BigInt> numbers;
-  for (int i = 0; i < count; ++i) {
-    const auto &[first, second] = ReadQuery();
-    cout << "Case "s << i + 1 << ": "s << endl
-         << first << " + "s << second << " = "s << first + second << endl
+  if (count <= 0) {
+    cout << "Number of test cases is either zero or invalid: "s << count
          << endl;
+  }
+
+  try {
+    std::pair<BigInt, BigInt> numbers;
+    for (int i = 0; i < count; ++i) {
+      const auto &[first, second] = ReadQuery();
+      cout << "Case "s << i + 1 << ": "s << endl
+           << first << " + "s << second << " = "s << first + second << endl
+           << endl;
+    }
+  } catch (std::invalid_argument &err) {
+    cerr << "Case failed: " << err.what() << endl;
   }
 }

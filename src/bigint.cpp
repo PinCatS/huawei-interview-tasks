@@ -32,7 +32,7 @@ BigInt::BigInt(const string &number) {
 
   for (int i = number.size() - 1; i >= first_non_zero_idx; --i) {
     if (number[i] - '0' < 0 || number[i] - '0' > 9) {
-      throw std::invalid_argument("Expected an integer, got "s + number +
+      throw std::invalid_argument("Expected positive integer, got "s + number +
                                   " (-->'"s + number[i] + "')"s);
     }
     digits.push_back(number[i] - '0');

@@ -79,7 +79,7 @@ void TestStringConstructor() {
     BigInt bad_number(bad_number_str); // without sign
   } catch (std::invalid_argument &e) {
     string expected_message =
-        "Expected an integer, got "s + bad_number_str + " (-->'t')"s;
+        "Expected positive integer, got "s + bad_number_str + " (-->'t')"s;
     assert(e.what() == expected_message);
   }
 }
