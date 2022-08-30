@@ -40,12 +40,12 @@ BigInt::BigInt(const string &number) {
 }
 
 /**
- * Constructor that builds BigInt from unsigned long long.
+ * Constructor that builds BigInt from long long.
  *
  * Time complexity: O(n) where n is a number of digits
  * Space complexity: O(n) where n is a number of digits
  */
-BigInt::BigInt(unsigned long long number) {
+BigInt::BigInt(long long number) {
   if (number < 0) {
     throw std::invalid_argument("Expected positive integer, got "s +
                                 std::to_string(number));

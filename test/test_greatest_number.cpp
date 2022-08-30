@@ -112,7 +112,7 @@ void TestRandomNumbersAndLimit() {
 }
 
 void TestGreatestNumberTime() {
-  cout << "TestNumbersWithNonZeroLimit"s << endl;
+  cout << "TestGreatestNumberTime"s << endl;
   cout << "There are 1000 numbers of all ones and the limit is 1000000000"
        << endl;
   int max_numbers_len = 1000;

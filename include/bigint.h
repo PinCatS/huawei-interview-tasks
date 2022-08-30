@@ -16,7 +16,9 @@ namespace bigint_huawei {
  *
  * Supports:
  *  - Only natural (positive integers)
- *  - Default default constructor that creates number 0
+ *  - Default constructor that creates number 0
+ *  - Constructor that build BigInt from string
+ *  - Constructor that build BigInt from long long int
  *  - Reading BigInt from in stream
  *  - Writing BigInt to out stream
  *  - Add operation for two BigInt numbers
@@ -30,7 +32,7 @@ class BigInt {
 public:
   BigInt();
   BigInt(const std::string &number);
-  BigInt(unsigned long long number);
+  BigInt(long long number);
 
   friend std::istream &operator>>(std::istream &in, BigInt &number);
   friend std::ostream &operator<<(std::ostream &out, const BigInt &number);

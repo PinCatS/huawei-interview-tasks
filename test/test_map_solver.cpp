@@ -231,9 +231,8 @@ int main() {
 
   // Mark tests that will run
   for (int i = 0; i < NUM_TESTS; ++i) {
-    TESTS[i] = false;
+    TESTS[i] = true;
   }
-  TESTS[NUM_TESTS - 1] = true;
 
   for (int i = 0; i < NUM_TESTS; ++i) {
     if (TESTS[i]) {

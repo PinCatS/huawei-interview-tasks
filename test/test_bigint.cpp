@@ -109,7 +109,7 @@ void TestRandomNumbersAddition() {
 
   std::random_device generator;
   // uniform distribution of numbers from LLONG_MIN to LLONG_MAX:
-  std::uniform_int_distribution<unsigned long long> distribution(0, ULLONG_MAX);
+  std::uniform_int_distribution<long long> distribution(0, LLONG_MAX);
   for (int i = 0; i < 100; ++i) {
     unsigned long long rand_num = distribution(generator);
     assert(BigInt(rand_num).to_string() == std::to_string(rand_num));
