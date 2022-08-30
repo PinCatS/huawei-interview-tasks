@@ -14,7 +14,7 @@ TEST_OBJ_DIR := $(OBJ_DIR)/tests
 all: text1 text2 text3
 
 .PHONY: tests
-tests: test_bigint runtests
+tests: test_bigint test_greatest_number runtests
 
 text1: $(OBJ_DIR)/text1.o $(OBJ_DIR)/bigint.o
 	mkdir -p $(EXEC_DIR)
@@ -28,15 +28,20 @@ text3: $(OBJ_DIR)/text3.o $(OBJ_DIR)/linked_matrix.o $(OBJ_DIR)/dlx.o $(OBJ_DIR)
 	mkdir -p $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $(EXEC_DIR)/text3 $(OBJ_DIR)/text3.o $(OBJ_DIR)/linked_matrix.o $(OBJ_DIR)/dlx.o $(OBJ_DIR)/map_solver.o
 
+# Building objects for C++ source
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
 # Building tests
 test_bigint: $(TEST_OBJ_DIR)/test_bigint.o $(OBJ_DIR)/bigint.o
 	mkdir -p $(TEST_EXEC_DIR)
 	$(CC) $(CFLAGS) -o $(TEST_EXEC_DIR)/test_bigint $(TEST_OBJ_DIR)/test_bigint.o $(OBJ_DIR)/bigint.o
 
-# Building objects for C++ source
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+test_greatest_number: $(TEST_OBJ_DIR)/test_greatest_number.o $(OBJ_DIR)/greatest_number.o
+	mkdir -p $(TEST_EXEC_DIR)
+	$(CC) $(CFLAGS) -o $(TEST_EXEC_DIR)/test_greatest_number $(TEST_OBJ_DIR)/test_greatest_number.o $(OBJ_DIR)/greatest_number.o
 
 # Building objects for C++ tests
 $(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
@@ -67,6 +72,10 @@ runtests:
 	@echo "Testing BigInt"
 	@echo "-------------------------------"
 	@$(TEST_EXEC_DIR)/test_bigint
+	@echo "*******************************"
+	@echo "Testing Greatest Number"
+	@echo "-------------------------------"
+	@$(TEST_EXEC_DIR)/test_greatest_number
 	@echo "*******************************"
 
 .PHONY: clean

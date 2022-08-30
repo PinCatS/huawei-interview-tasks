@@ -6,6 +6,8 @@ namespace gn_huawei {
  * Finds the closest to the limit sum.
  * Can be picked at most 4 numbers (numbers can be repeated).
  *
+ * Note: input array of numbers is modified (sorted)
+ *
  * The below algorithm finds all two sums first and saves them.
  * Then it sums two sums and updates better maximum.
  *
@@ -45,6 +47,11 @@ int FindGreatestNumber(std::vector<int> &numbers, int limit) {
       break;
     }
 
+    // Update max_sum in case we can get the largest with only one number
+    if (max_sum < numbers[i]) {
+      max_sum = numbers[i];
+    }
+
     for (size_t j = i; j < numbers.size(); ++j) {
       int sum = numbers[i] + numbers[j];
       // Found best max
@@ -55,6 +62,11 @@ int FindGreatestNumber(std::vector<int> &numbers, int limit) {
       // All next sums will be above the limit
       if (sum > limit) {
         break;
+      }
+
+      // Update max_sum in case we can get the largest with only one number
+      if (max_sum < sum) {
+        max_sum = sum;
       }
 
       two_sums.push_back(sum);
@@ -85,7 +97,7 @@ int FindGreatestNumber(std::vector<int> &numbers, int limit) {
     }
 
     int sum = two_sums[i] + two_sums[left];
-    if (sum > max_sum) {
+    if (max_sum < sum) {
       max_sum = sum;
     }
 

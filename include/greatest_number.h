@@ -10,6 +10,8 @@ namespace gn_huawei {
  * Finds the closest to the limit sum.
  * Can be picked at most 4 numbers (numbers can be repeated).
  *
+ * Note: input array of numbers is modified (sorted)
+ *
  * The below algorithm finds all two sums first and saves them.
  * Then it sums two sums and updates better maximum.
  *
